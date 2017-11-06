@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RTS - Select And Move</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="controlpanel">
+        <label>
+            Unit speed: 
+            <input type="text" data-bind="value: unitSpeed" />
+        </label>
+        <label>
+            Unit size: 
+            <input type="text" data-bind="value: unitSize" />
+        </label>
+    </div>
+    <canvas id="c"></canvas>
+    <script src="/scripts/game.js"></script>
+</body>
+
+</html>
