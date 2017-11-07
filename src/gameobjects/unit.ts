@@ -66,13 +66,14 @@ export class Unit extends GameObject implements IUpdateable {
      */
     update(dt: number): void {
         if (this._targetDestination != null) {
-            this._direction = this._targetDestination.subtract(this._position).normalize();
+            this._direction = this._targetDestination.subtract(this.position).normalize();
         }
 
         if (this._direction != null && !this._direction.isZero) {
             let delta = this.speed * (dt / 1000);
-            let nextPosition: Vector2D = this._position.add(this._direction.multiply(delta));            
-            this._position = nextPosition;
+            let nextPosition: Vector2D = this.position.add(this._direction.multiply(delta));            
+            
+            this._transform.position = nextPosition;
         }
 
         if (this._reachedTarget()) {
@@ -99,16 +100,16 @@ export class Unit extends GameObject implements IUpdateable {
 
         let reachedX: boolean = true;
         if (this._direction.x > 0) {
-            reachedX = this._position.x > this._targetDestination.x;
+            reachedX = this.position.x > this._targetDestination.x;
         } else if (this._direction.x < 0) {
-            reachedX = this._position.x < this._targetDestination.x;
+            reachedX = this.position.x < this._targetDestination.x;
         }
         
         let reachedY: boolean = true;
         if (this._direction.y > 0) {
-            reachedY = this._position.y > this._targetDestination.y;
+            reachedY = this.position.y > this._targetDestination.y;
         } else if (this._direction.y < 0) {
-            reachedY = this._position.y < this._targetDestination.y;
+            reachedY = this.position.y < this._targetDestination.y;
         }
         
         return reachedX && reachedY;

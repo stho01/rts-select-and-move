@@ -1,11 +1,13 @@
+import { Transform } from './../components/transform';
 import { Vector2D } from '../math/vector2d';
 
 export class GameObject {
-    protected _position: Vector2D = new Vector2D();
-
-    get position(): Vector2D { return this._position; }
+    protected readonly _transform: Transform = new Transform();
+    
+    get transform(): Transform { return this._transform; }
+    get position(): Vector2D { return this._transform.position; }
 
     setPosition(x: number, y: number): void {
-        this._position = new Vector2D(x, y);
+        this._transform.position = new Vector2D(x, y);
     }
 }
