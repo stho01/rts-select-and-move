@@ -1,6 +1,6 @@
 # RTS Game - Select And Move Functionality
 
-## Concepts
+## Terms
 - Player  - The user that is in control of the unit. 
 - Unit    - A controllable entity in the world that can be selected by the player.
 
