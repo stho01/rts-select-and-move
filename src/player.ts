@@ -1,8 +1,8 @@
-import { Vector2D } from './vector2d';
-import { Config } from './config';
-import { CircleCollision } from './collisionbox';
-import { Point } from './point';
-import { Unit } from './unit';
+import { Vector2D } from './math/vector2d';
+import { Point } from './math/point';
+import { Config } from './configuration/config';
+import { CircleCollision } from './physics/collisionbox';
+import { Unit } from './gameobjects/unit';
 
 export class Player {
     //********************************************
@@ -41,7 +41,6 @@ export class Player {
             unit.collider.add(new CircleCollision(unit.size/2));
             this.addUnit(unit);
         }
-        console.log(this._units.map(u => u.position));
     }
 
     /**
@@ -63,7 +62,7 @@ export class Player {
         let selected:Unit[] = [];
 
         if (combine && Array.isArray(this._selectedUnits)) {
-            selected.concat(this._selectedUnits);
+            selected = selected.concat(this._selectedUnits);
         }
         
         this._units.forEach(u => {
@@ -73,7 +72,6 @@ export class Player {
         })
 
         this._selectedUnits = selected;
-        console.log(this._selectedUnits);
     }
 
 
@@ -81,7 +79,7 @@ export class Player {
      * 
      * @param to 
      */
-    moveUnits(x: number, y: number): void {
-        this._selectedUnits.forEach(u => u.moveTo(x, y));
+    moveUnits(point: Point): void {
+        this._selectedUnits.forEach(u => u.moveTo(point.x, point.y));
     }
 }

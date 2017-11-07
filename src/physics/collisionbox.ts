@@ -1,6 +1,6 @@
-import { Vector2D } from './vector2d';
+import { Vector2D } from '../math/vector2d';
 import { ICollisionBox } from './collisionbox';
-import { Point } from './point';
+import { Point } from '../math/point';
 
 /**
  * A collision box 
@@ -11,7 +11,7 @@ export interface ICollisionBox {
      * 
      * @param {Point} point
      */
-    inside(point: Point, position: Vector2D): boolean;
+    intersects(point: Point, position: Vector2D): boolean;
 }
 
 /**
@@ -27,7 +27,7 @@ export class CircleCollision implements ICollisionBox {
         this._r = radius;
     }
 
-    inside(point: Point, position: Vector2D): boolean {
+    intersects(point: Point, position: Vector2D): boolean {
         let direction: Vector2D = position.subtract(new Vector2D(point.x, point.y));
         
         return direction.lenght() <= this._r;

@@ -1,4 +1,4 @@
-import { Vector2D } from './vector2d';
+import { Vector2D } from '../math/vector2d';
 
 export class GameObject {
     protected _position: Vector2D = new Vector2D();

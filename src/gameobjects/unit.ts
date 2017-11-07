@@ -1,10 +1,10 @@
-import { IUpdateable } from './update';
-import { Collider } from './collider';
-import { ICollisionBox, CircleCollision } from './collisionbox';
-import { Config } from './config';
+import { IUpdateable } from '../abstract/update';
+import { Collider } from '../physics/collider';
+import { ICollisionBox, CircleCollision } from '../physics/collisionbox';
+import { Config } from '../configuration/config';
 import { GameObject } from './gameobject';
-import { Vector2D } from './vector2d';
-import { Game } from './game';
+import { Vector2D } from '../math/vector2d';
+import { Game } from '../game';
 
 export enum UnitState {
     IDLE = 1,
