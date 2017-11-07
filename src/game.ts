@@ -1,9 +1,11 @@
-import { IUpdateable } from './update';
-import { MouseButtonType, InputManager } from './inputmanger';
+import { MouseButtonCode } from './input/mousebuttoncode';
+import { IUpdateable } from './abstract/update';
+import { InputManager } from './input/inputmanger';
 import { Player } from './player';
-import { RenderingUtils } from './renderingutils';
-import { Config } from './config';
-import { Unit, UnitState } from './unit';
+import { RenderingUtils } from './rendering/renderingutils';
+import { Config } from './configuration/config';
+import { Unit, UnitState } from './gameobjects/unit';
+import { KeyCode } from './input/keycode';
 
 export class Game {
     
@@ -39,8 +41,6 @@ export class Game {
         this._initCanvas();
         this._player.init();
         window.oncontextmenu = this._onContextMenuClickHandler.bind(this);
-        this._canvas.addEventListener("mousedown", this._onClickEventHandler.bind(this));
-
         return this;
     }
     
@@ -48,7 +48,7 @@ export class Game {
      * 
      */
     run(): void {
-        console.log("game is running..123"); 
+        console.log("game is running..."); 
         this._update(0);
     }
 
@@ -84,7 +84,15 @@ export class Game {
      */
     private _update(now: number): void {
         let dt: number = now - this._previousFrameTime;
-        this._previousFrameTime = now;
+        this._previousFrameTime = now; 
+        
+        if (InputManager.Instance.isMouseButtonPressed(MouseButtonCode.Left)) {
+            this._player.select(
+                InputManager.Instance.getMousePosition(this._canvas),
+                InputManager.Instance.isKeyDown(KeyCode.Shift));
+        } else if (InputManager.Instance.isMouseButtonPressed(MouseButtonCode.Right)) {
+            this._player.moveUnits(InputManager.Instance.getMousePosition(this._canvas));
+        }
 
         this._updateViewPort();
         
@@ -94,9 +102,8 @@ export class Game {
         this.updateables.forEach(u => u.update(dt));
 
         this._render();
-        requestAnimationFrame(this._update.bind(this));
-
         InputManager.Instance.update();
+        requestAnimationFrame(this._update.bind(this));
     }
 
     /**
@@ -119,26 +126,6 @@ export class Game {
     //********************************************
     //** event handlers
     //********************************************
-
-    private _onClickEventHandler(event: MouseEvent): void {
-        if(event.target === this._canvas) {
-            event.stopImmediatePropagation();
-            event.preventDefault();
-
-            let bbox    : ClientRect = this._canvas.getBoundingClientRect(),
-                canvasX : number     = event.clientX - bbox.left,
-                canvasY : number     = event.clientY - bbox.top;
-
-            if (event.buttons == MouseButtonType.Left) {
-                this._player.select({
-                    x: canvasX,
-                    y: canvasY
-                });
-            } else if(event.buttons === MouseButtonType.Right) {
-                this._player.moveUnits(canvasX, canvasY);
-            }
-        }
-    }
 
     /**
      * 

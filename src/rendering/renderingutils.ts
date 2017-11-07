@@ -1,6 +1,6 @@
-import { Config } from './config';
+import { Config } from '../configuration/config';
+import { Vector2D } from '../math/vector2d';
 
-import { Vector2D } from './vector2d';
 export class RenderingUtils {
 
     private readonly _ctx: CanvasRenderingContext2D;

@@ -1,11 +1,6 @@
-import { ControlPanel } from './controlpanel';
+import { ControlPanel } from './configuration/controlpanel';
 import { Game } from './game';
-import { InputManager } from './inputmanger';
-
-// no context menu in this application
-// window.oncontextmenu = () => {
-//     return false;
-// };
+import { InputManager } from './input/inputmanger';
 
 InputManager.Instance.init();
 ControlPanel.init();

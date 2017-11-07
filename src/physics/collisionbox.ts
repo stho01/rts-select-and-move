@@ -1,6 +1,6 @@
-import { Vector2D } from './vector2d';
+import { Vector2D } from '../math/vector2d';
 import { ICollisionBox } from './collisionbox';
-import { Point } from './point';
+import { Point } from '../math/point';
 
 /**
  * A collision box 
