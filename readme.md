@@ -9,11 +9,12 @@ A lab project for creating a game that let the *player*
 click on a *unit* to select the *unit* and make the *unit* move 
 in the direction the *player* want. 
 
-## Requirements
-1) Mouse input              - Implemeted
-2) Player state             - Implemeted
-    - What's selected?      - Implemeted
-3) Movable entities/units   - Implemeted
+## Feature list
+1) Mouse input              - Implemented
+2) Player state             - Implemented
+    - What's selected?      - Implemented
+3) Movable entities/units   - Implemented
+4) Box selection            - Implemented
 
 
 ## Development environment
