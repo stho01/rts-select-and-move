@@ -30,7 +30,7 @@ export class RenderingUtils {
     }
 
     renderSelectedUnit(pos: Vector2D): void{
-        this._ctx.strokeStyle = "green";
+        this._ctx.strokeStyle = "rgba(85, 255, 15, 1)";
         this._ctx.beginPath();
 
         let r: number = Config.UnitSize/2;

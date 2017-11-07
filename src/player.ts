@@ -84,5 +84,5 @@ export class Player {
      */
     moveUnits(point: Point): void {
         this._selectedUnits.forEach(u => u.moveTo(point.x, point.y));
-    }
+    } 
 }
