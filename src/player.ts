@@ -1,7 +1,7 @@
 import { Vector2D } from './math/vector2d';
 import { Point } from './math/point';
 import { Config } from './configuration/config';
-import { CircleCollision } from './physics/collisionbox';
+import { CircleCollision, BoxCollision } from './physics/collisionbox';
 import { Unit } from './gameobjects/unit';
 
 export class Player {
@@ -38,7 +38,7 @@ export class Player {
         for (let i = 0; i < 5; i++) {
             let unit: Unit = new Unit();
             unit.setPosition((i * 150) + 50, 100);
-            unit.collider.add(new CircleCollision(unit.size/2));
+            unit.collider.add(new CircleCollision(unit.transform, unit.size/2));
             this.addUnit(unit);
         }
     }
@@ -58,18 +58,21 @@ export class Player {
      * @param {Point} point     - the point to check units against
      * @param {boolean} combine - combine selection with current selection
      */
-    select(point: Point, combine: boolean = false) {
+    select(start: Point, end: Point, combine: boolean = false) {
         let selected:Unit[] = [];
 
         if (combine && Array.isArray(this._selectedUnits)) {
             selected = selected.concat(this._selectedUnits);
         }
         
+        let boxCollision = new BoxCollision(start, end);
         this._units.forEach(u => {
-            if (u.collider.checkCollision(point, u.position)) {
+            if (u.collider.checkCollision(start) 
+            || u.collider.checkCollision(end) 
+            || boxCollision.intersects({x: u.position.x, y: u.position.y })) {
                 selected.push(u);
             }
-        })
+        });
 
         this._selectedUnits = selected;
     }

@@ -75,6 +75,14 @@ export class InputManager {
     }
 
     /**
+     * 
+     * @param btnCode 
+     */
+    isMouseButtonReleased(btnCode: number|MouseButtonCode): boolean {
+        return this._currentMouseBtnMap[btnCode] !== true && this._previousMouseBtnMap[btnCode] === true;
+    }
+
+    /**
      * Checks if the given key is held down.
      * 
      * @param btnCode 

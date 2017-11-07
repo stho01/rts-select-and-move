@@ -1,3 +1,4 @@
+import { Point } from './math/point';
 import { MouseButtonCode } from './input/mousebuttoncode';
 import { IUpdateable } from './abstract/update';
 import { InputManager } from './input/inputmanger';
@@ -22,7 +23,9 @@ export class Game {
     private _rendrer            : RenderingUtils;
     public readonly updateables : Set<IUpdateable> = new Set<IUpdateable>();
     private readonly _player    : Player = new Player();
+    private _mouseStart: Point;
     
+
     /**
      * 
      */
@@ -87,11 +90,22 @@ export class Game {
         this._previousFrameTime = now; 
         
         if (InputManager.Instance.isMouseButtonPressed(MouseButtonCode.Left)) {
-            this._player.select(
-                InputManager.Instance.getMousePosition(this._canvas),
-                InputManager.Instance.isKeyDown(KeyCode.Shift));
+            // track mouse start for later when the button is released.
+            this._mouseStart = InputManager.Instance.getMousePosition(this._canvas);
+
         } else if (InputManager.Instance.isMouseButtonPressed(MouseButtonCode.Right)) {
+            // move units to clicked position.
             this._player.moveUnits(InputManager.Instance.getMousePosition(this._canvas));
+        }
+
+        if (this._mouseStart != null && InputManager.Instance.isMouseButtonReleased(MouseButtonCode.Left)) {
+
+            this._player.select(
+                this._mouseStart, 
+                InputManager.Instance.getMousePosition(this._canvas), 
+                InputManager.Instance.isKeyDown(KeyCode.Shift));
+
+            this._mouseStart = null;
         }
 
         this._updateViewPort();
@@ -116,11 +130,15 @@ export class Game {
 
         // render units.
         this._player.units.forEach(u => this._rendrer.renderUnit(u.position));
+        this._player.selectedUnits.forEach(u => this._rendrer.renderSelectedUnit(u.position));
 
         this._player.units.filter(u => u.state === UnitState.MOVING && u.targetDestination != null)
                           .forEach(u =>  this._rendrer.renderLine(u.position, u.targetDestination));
 
-        this._player.selectedUnits.forEach(u => this._rendrer.renderSelectedUnit(u.position));
+
+        if(this._mouseStart != null) {
+            this._rendrer.renderSelectionBox(this._mouseStart, InputManager.Instance.getMousePosition(this._canvas));
+        }
     }
 
     //********************************************
