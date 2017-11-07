@@ -1,5 +1,5 @@
 import { IUpdateable } from './update';
-import { MouseButtonType } from './inpututils';
+import { MouseButtonType, InputManager } from './inputmanger';
 import { Player } from './player';
 import { RenderingUtils } from './renderingutils';
 import { Config } from './config';
@@ -95,6 +95,8 @@ export class Game {
 
         this._render();
         requestAnimationFrame(this._update.bind(this));
+
+        InputManager.Instance.update();
     }
 
     /**
