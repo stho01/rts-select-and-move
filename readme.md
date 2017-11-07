@@ -35,4 +35,7 @@ Build bundle:
 $ npm run build
 ```
 
+## Illustration
+![alt text](https://raw.githubusercontent.com/stho01/rts-select-and-move/master/doc/sample.png "")
+
 
