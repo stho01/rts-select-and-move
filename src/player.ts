@@ -4,14 +4,14 @@ import { Config } from './configuration/config';
 import { CircleCollision, BoxCollision } from './physics/collisionbox';
 import { Unit } from './gameobjects/unit';
 
-export class Player {
+    export class Player {
     //********************************************
     //** attributes:
     //********************************************
-    
+
     private readonly _units : Unit[] = [];
     private _selectedUnits  : Unit[] = [];
-    
+
     //********************************************
     //** ctor:
     //********************************************

@@ -16,9 +16,11 @@
   "devDependencies": {
     "@types/knockout": "^3.4.46",
     "knockout": "^3.4.2",
-    "ts-loader": "^3.1.1",
-    "typescript": "^2.6.1",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
-  }
+    "ts-loader": "6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "3.10.1"
+  },
+  "dependencies": {}
 }
