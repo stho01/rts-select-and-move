@@ -1,6 +1,4 @@
-import { Vector2D } from './math/vector2d';
 import { Point } from './math/point';
-import { Config } from './configuration/config';
 import { CircleCollision, BoxCollision } from './physics/collisionbox';
 import { Unit } from './gameobjects/unit';
 
@@ -84,5 +82,13 @@ import { Unit } from './gameobjects/unit';
      */
     moveUnits(point: Point): void {
         this._selectedUnits.forEach(u => u.moveTo(point.x, point.y));
-    } 
+    }
+
+    /**
+     *
+     * @param point
+     */
+    queueMove(point: Point): void {
+        this._selectedUnits.forEach(u => u.pushMoveTo(point.x, point.y));
+    }
 }

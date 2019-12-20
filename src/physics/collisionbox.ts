@@ -1,5 +1,4 @@
 import { Transform } from './../components/transform';
-import { ICollisionBox } from './collisionbox';
 import { Vector2D } from '../math/vector2d';
 import { Point } from '../math/point';
 
@@ -16,7 +15,7 @@ export interface ICollisionBox {
 }
 
 /**
- * 
+ *
  */
 export class CircleCollision implements ICollisionBox {
     

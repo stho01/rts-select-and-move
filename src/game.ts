@@ -1,12 +1,11 @@
-import { Point } from './math/point';
-import { MouseButtonCode } from './input/mousebuttoncode';
-import { IUpdateable } from './abstract/update';
-import { InputManager } from './input/inputmanger';
-import { Player } from './player';
-import { RenderingUtils } from './rendering/renderingutils';
-import { Config } from './configuration/config';
-import { Unit, UnitState } from './gameobjects/unit';
-import { KeyCode } from './input/keycode';
+import {Point} from './math/point';
+import {MouseButtonCode} from './input/mousebuttoncode';
+import {IUpdateable} from './abstract/update';
+import {InputManager} from './input/inputmanger';
+import {Player} from './player';
+import {RenderingUtils} from './rendering/renderingutils';
+import {UnitState} from './gameobjects/unit';
+import {KeyCode} from './input/keycode';
 
 export class Game {
     
@@ -94,8 +93,13 @@ export class Game {
             this._mouseStart = InputManager.Instance.getMousePosition(this._canvas);
 
         } else if (InputManager.Instance.isMouseButtonPressed(MouseButtonCode.Right)) {
-            // move units to clicked position.
-            this._player.moveUnits(InputManager.Instance.getMousePosition(this._canvas));
+            if (InputManager.Instance.isKeyDown(KeyCode.Shift)) {
+                // move units to clicked position.
+                this._player.queueMove(InputManager.Instance.getMousePosition(this._canvas));
+            } else {
+                // move units to clicked position.
+                this._player.moveUnits(InputManager.Instance.getMousePosition(this._canvas));
+            }
         }
 
         if (this._mouseStart != null && InputManager.Instance.isMouseButtonReleased(MouseButtonCode.Left)) {
@@ -133,7 +137,16 @@ export class Game {
         this._player.selectedUnits.forEach(u => this._rendrer.renderSelectedUnit(u.position));
 
         this._player.units.filter(u => u.state === UnitState.MOVING && u.targetDestination != null)
-                          .forEach(u =>  this._rendrer.renderLine(u.position, u.targetDestination));
+                          .forEach(u =>  {
+                              let previousDestination = u.position;
+                              let destination = u.targetDestination;
+
+                              for (let i = u.targetDestinations.length; i >= 0; i--) {
+                                  this._rendrer.renderLine(previousDestination, destination);
+                                  previousDestination = destination;
+                                  destination = u.targetDestinations[i-1];
+                              }
+                          });
 
 
         if(this._mouseStart != null) {
